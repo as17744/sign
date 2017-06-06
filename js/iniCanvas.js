@@ -5,6 +5,9 @@ window.onload=function(){
 	 utils.addHandler(canvas,"mousedown",onMouseDown);
 	 utils.addHandler(canvas,"mousemove",onMouseMove);
 	 utils.addHandler(canvas,"mouseup",onMouseUp);
+	 utils.addHandler(canvas,"touchstart",onMouseDown);
+	 utils.addHandler(canvas,"touchmove",onMouseMove);
+	 utils.addHandler(canvas,"touchend",onMouseUp);
 	var context = canvas.getContext('2d');
 	var linex = new Array();
 	var liney = new Array();
