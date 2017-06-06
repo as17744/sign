@@ -1,0 +1,71 @@
+html,body{
+	width:100%;
+	height:100%;
+}
+
+body{
+	margin:0;
+	padding: 0;
+	background:url(../pic/backpic.jpg) no-repeat 0 0;
+	background-size: 100% 100%;
+}
+
+#canArea{
+	margin:0 auto;
+	width:100%;
+	height:400px;
+    text-align: center;
+}
+
+#canvasEdit{
+	margin:0 auto;
+}
+
+#bttArea{
+	position:absolute;
+	bottom:0;
+	z-index:3;
+	width:100%;
+	height:30%;
+}
+
+.btt{
+	text-align: center;
+	line-height: 32px;
+	position: absolute;
+	margin-top: 0;
+	cursor:pointer;
+	width:80px;
+	height:80px;
+	background-color: purple;
+	border-radius: 40px;
+	filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+    opacity:0.5;/*其他，透明度50%*/
+}
+
+.btt:hover{
+	background-color: blue;
+}
+
+#btt1{
+	left:30%;
+	top:0;
+}
+
+#btt2{
+	left:0;
+	right:0;
+	top:10%;
+	margin: auto;
+}
+
+#btt3{
+	right:30%;
+	top:0;
+}
+.bttCont{
+	font-weight: bold;
+	font-size: 20px;
+
+}

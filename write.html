@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>write</title>
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	overflow-x:hidden;
+}
+.work_area {
+	width: 600px;
+	height: 283px;
+	border: solid 1px #06C;
+}
+.work_area .button_area {
+	width: 100%;
+	height: 33px;
+	background-color: black;
+	text-align: right;
+}
+.work_area .button_area .button {
+	margin: 5px;
+}
+.work_area .button_area .button_r {
+	margin: 5px 25px 5px 5px;
+}
+.work_area .editing_area {
+	width: 100%;
+	height: 250px;
+	border: solid 0px #CC6600;
+}
+.work_show {
+	width: 600px;
+	height: 127px;
+	border: solid 1px #06C;
+}
+.work_show .preview{
+	width: 300px;
+	height: 126px;
+	float:left;
+}
+</style>
+</head>
+
+<body ondragstart="window.event.returnValue=false;"  onselectstart="event.returnValue=false;">
+<!-- 首先有个工作区域 -->
+<div class="work_area"> 
+  <!-- 按钮区域 用来显示一些按钮 -->
+  <div class="button_area">
+    <input class="button" name="rewrite" type="button" value="rewrite" onClick="rewrite()"/>
+    <input class="button" name="preview" type="button" value="preview" onClick="preview()"/>
+    <input class="button_r" name="save" type="button" value="save" onClick="save()"/>
+  </div>
+  <!-- 编辑区域 用来写字的 -->
+  <div class="editing_area" id="e_area">
+    <canvas width="600" height="250" id="canvasEdit"></canvas>
+  </div>
+  
+  <div class="work_show">
+  	<div id="previewShow" class="preview"></div>
+    <div class="preview"><textarea id="textarea" style="width:299px; float:left;" rows="8"></textarea></div>
+  </div>
+  
+</div>
+
+<!-- 预览 -->
+</body>
+<script>
+    var canvas = document.getElementById('canvasEdit');
+	canvas.addEventListener('mousemove', onMouseMove, false);
+	canvas.addEventListener('mousedown', onMouseDown, false);
+	canvas.addEventListener('mouseup', onMouseUp, false);
+	var context = canvas.getContext('2d');
+	var linex = new Array();
+	var liney = new Array();
+	var linen = new Array();
+	var lastX = 1;
+	var lastY = 30;
+	var flag = 0;
+	var canArea=document.getElementById("e_area");
+	function onMouseMove(evt)
+	{
+		if (flag == 1)
+		{   
+			var x=evt.clientX-canArea.offsetLeft;
+			var y=evt.clientY-canArea.offsetTop;
+			linex.push(x);
+			liney.push(y);
+			linen.push(1);
+			context.save();
+			context.beginPath();
+			context.lineWidth = 5;
+			for (var i = 0; i < linex.length; i++)
+			{
+				lastX = linex[i];
+				lastY = liney[i];
+				if (linen[i] == 0)
+					context.moveTo(lastX, lastY);
+				else
+					context.lineTo(lastX, lastY);
+			}
+			//context.strokeStyle = 'hsl(50%, 50%, 50%)';
+			//context.shadowColor = 'white';
+			context.shadowBlur = 10;
+			context.stroke();
+			context.restore();
+		}
+	}
+	function onMouseDown(evt)
+	{
+		flag = 1;
+		var x=evt.clientX-canArea.offsetLeft;
+		var y=evt.clientY-canArea.offsetTop;
+		linex.push(x);
+		liney.push(y);
+		linen.push(0);
+	}
+	function onMouseUp(evt)
+	{
+		flag = 0;
+		var x=evt.clientX-canArea.offsetLeft;
+		var y=evt.clientY-canArea.offsetTop;
+		linex.splice(0,linex.length);
+		liney.splice(0,liney.length);
+		linen.splice(0,liney.length);
+	}
+	// 重画
+	function rewrite(){	
+		var show=document.getElementById("previewShow");
+		show.innerHTML="";
+		context.clearRect(0,0,canvas.width,canvas.height);
+
+	}
+	function preview(){
+		var show=document.getElementById("previewShow");
+		show.innerHTML="";
+		show.appendChild(convertCanvasToImage(canvas));
+	}
+	function save(){
+		var imgdata = canvas.toDataURL("png");   
+    //将图片保存到本地
+    var saveFile = function (data, filename) {
+        var link = document.createElement('a');
+        link.href = data;
+        link.download = filename;
+        var event = document.createEvent('MouseEvents');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        link.dispatchEvent(event);
+    }
+    var filename = new Date().toLocaleDateString() + '.png';
+    saveFile(imgdata, filename);
+	}
+
+	function convertCanvasToImage(canvas){
+		var image=new Image();
+		image.width=300;
+		image.height=125;
+		image.src=canvas.toDataURL();
+		return image;
+	}
+</script>
+</html>
