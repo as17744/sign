@@ -2,12 +2,13 @@ window.onload=function(){
 	var canvas = document.getElementById('canvasEdit');
 	 canvas.width=document.documentElement.clientWidth*0.99;
 	 canvas.height=document.documentElement.clientHeight*0.6;
-	 utils.addHandler(canvas,"mousedown",onMouseDown);
-	 utils.addHandler(canvas,"mousemove",onMouseMove);
-	 utils.addHandler(canvas,"mouseup",onMouseUp);
+	 utils.addHandler(canvas,"contextmenu",function(e){e.preventDefault();});
 	 utils.addHandler(canvas,"touchstart",onMouseDown);
 	 utils.addHandler(canvas,"touchmove",onMouseMove);
 	 utils.addHandler(canvas,"touchend",onMouseUp);
+	 utils.addHandler(canvas,"mousedown",onMouseDown);
+	 utils.addHandler(canvas,"mousemove",onMouseMove);
+	 utils.addHandler(canvas,"mouseup",onMouseUp);
 	var context = canvas.getContext('2d');
 	var linex = new Array();
 	var liney = new Array();
